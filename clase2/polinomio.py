@@ -1,74 +1,22 @@
-class Pila:
-    def __init__(self):
-        self.items = []
-    
-    def __str__(self):
-        return str(self.items)
-    
-    def push(self, x):
-        self.items.append(x)
+class Nodo: # TERMINO 
+        def __init__(self, coeficiente= None, grado= None, prox=None):
+            self.coeficiente = coeficiente
+            self.grado = grado
+            self.prox = prox
 
-    def pop(self):
-        try:
-            return self.items.pop()
-        except IndexError:
-            raise ValueError("La pila esta vacia")
-    
-    def is_empty(self):
-        return self.items == []
-
-    def top(self):
-        x= self.items.pop()
-        self.items.append(x)
-        return x
-
-p = Pila()
-
-# print(p.is_empty())
-# p.push(1)
-# print(p)
-# p.pop()
-# print(p)
-# p.push(23)
-# print(p)
-
-class Cola:
-    def __init__(self):
-        self.items = []
-
-    def enqueue(self, x):
-        self.items.append(x)
-
-    def dequeue(self):
-        try:
-            self.items.pop(0)
-        except IndexError:
-            raise ValueError("La cola esta vacia")
-    
-    def is_empty(self):
-        return self.items == []
-
-
-class Nodo:
-    def __init__(self, dato=None, prox=None):
-        self.dato = dato
-        self.prox = prox
-
-    def __str__(self):
-        return str(self.dato)
-
-nodo = Nodo("peras", "banana")
+        def __str__(self):
+            return str(f"{self.coeficiente} x {self.grado}")
 
 
 
-class ListaEnlazada(object):
-    #Modela una lista enlazada, compuesta por nodos
+class Polinomio(object):
+    "Modela una polinomio, compuesta por terminos"
 
     def __init__(self):
-        #crea una lista enlazada vacia
-        
+        #crea una polinomio vacio
+
         #apuntara al primero nodo - None con la lista vacia
-        self.primero = None
+        self.primero = None # El termino de mayor grado
 
         #len: longitud de la lista = 0 con la lista vacia
         self.len = 0
@@ -130,32 +78,39 @@ class ListaEnlazada(object):
             #Si no levanto excepcion, hay q restar 1 al largo
             self.len -= 1
 
-    def insert(self, indice, x):
+    def addTermino(self, coeficiente, potencia):
         """Inserta el elemento x en la posicion indice.
         si la posicion es invalida, levanta un error"""
 
-        if (indice > self.len) or (indice < 0):
-            raise IndexError("Posicion invalida") #crea un nuevo nodo con x 
-        nuevo = Nodo(x) #en el ejemplo llevaba parentesis
+        nuevo = Nodo(coeficiente, potencia) #en el ejemplo llevaba parentesis
 
-        #insertar al principio (caso particular)
-        if indice == 0:
-            #El siguientedel nuevo pasa a ser el que era primero
-             nuevo.prox = self.primero
+        #insertar al final (caso particular)
+        if potencia == 0:
+            #El siguiente del ultimo pasa a ser el nuevo nodo
+            #buscamos el ultimo termino
+            actual = self.primero
+            while actual.prox != None:
+                actual = actual.prox
 
-             # El primero apasa a ser el nuevo
-             self.primero = nuevo
+        # Llegamos al final de la lista e insertamos el termino aca
+            actual.proximo = nuevo
+        
+        # Insertar en cualquier lugar mas al frente, potencia != 0
+        else:       
+            actual = self.primero
 
+            ################################## MINUTO  3:32 ########################
+        
         #Insertar en cualquier lugar > 0 
-        else: 
-            #recorre la lista hasta llegar a la posicion deseada nodo_anterior = self.primero 
-            for posicion in range(1, indice):
-                nodo_anterior = nodo_anterior.prox
-                #Intercala el nuevo y obtiene nodo_anterior -> nuevo -> nodo_anterior.prox
-                nuevo.prox = nodo_anterior.prox
-                nodo_anterior.prox = nuevo
+        # else: 
+        #     #recorre la lista hasta llegar a la posicion deseada nodo_anterior = self.primero 
+        #     for posicion in range(1, indice):
+        #         nodo_anterior = nodo_anterior.prox
+        #         #Intercala el nuevo y obtiene nodo_anterior -> nuevo -> nodo_anterior.prox
+        #         nuevo.prox = nodo_anterior.prox
+        #         nodo_anterior.prox = nuevo
                 
-                #En cualquier caso incrementar en 1 la longitud
-        self.len += 1
+        #         #En cualquier caso incrementar en 1 la longitud
+        # self.len += 1
 
 
