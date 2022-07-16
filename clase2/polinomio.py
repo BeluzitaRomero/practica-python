@@ -87,7 +87,8 @@ class Polinomio(object):
         #insertar al final (caso particular)
         if potencia == 0:
             #El siguiente del ultimo pasa a ser el nuevo nodo
-            #buscamos el ultimo termino
+            #buscamos el ultimo termino xq es el que tendria x^0,
+            #por eso hacemos un while que busque el ultimo (el none)
             actual = self.primero
             while actual.prox != None:
                 actual = actual.prox
